@@ -1,0 +1,369 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>    <meta charset="UTF-8"/>  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    <title>Shared Itinerary - Traveloop</title>    <!-- Tailwind CSS -->    <script src="https://cdn.tailwindcss.com"></script>    <!-- Google Font -->    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <style>  
+  
+    *{  
+      margin:0;  
+      padding:0;  
+      box-sizing:border-box;  
+      font-family:'Poppins',sans-serif;  
+    }  
+  
+    body{  
+      min-height:100vh;  
+      background:linear-gradient(-45deg,#0f172a,#1e3a8a,#7c3aed,#0f172a);  
+      background-size:400% 400%;  
+      animation:gradient 10s ease infinite;  
+      color:white;  
+      overflow-x:hidden;  
+    }  
+  
+    @keyframes gradient{  
+  
+      0%{  
+        background-position:0% 50%;  
+      }  
+  
+      50%{  
+        background-position:100% 50%;  
+      }  
+  
+      100%{  
+        background-position:0% 50%;  
+      }  
+  
+    }  
+  
+    .glass{  
+      background:rgba(255,255,255,0.08);  
+      backdrop-filter:blur(14px);  
+      border:1px solid rgba(255,255,255,0.1);  
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);  
+    }  
+  
+    .fade-up{  
+      animation:fadeUp 1s ease;  
+    }  
+  
+    @keyframes fadeUp{  
+  
+      from{  
+        opacity:0;  
+        transform:translateY(20px);  
+      }  
+  
+      to{  
+        opacity:1;  
+        transform:translateY(0);  
+      }  
+  
+    }  
+  
+    .card-hover:hover{  
+      transform:translateY(-8px) scale(1.02);  
+      transition:0.4s;  
+    }  
+  
+    .floating{  
+      animation:floating 4s ease-in-out infinite;  
+    }  
+  
+    @keyframes floating{  
+  
+      0%{  
+        transform:translateY(0px);  
+      }  
+  
+      50%{  
+        transform:translateY(-10px);  
+      }  
+  
+      100%{  
+        transform:translateY(0px);  
+      }  
+  
+    }  
+  
+  </style>  </head>  <body>    <!-- Navbar -->    <nav class="glass flex items-center justify-between px-8 py-4 sticky top-0 z-50">  <h1 class="text-3xl font-bold">  
+  Travel<span class="text-purple-400">oop</span>  
+</h1>  
+
+<button  
+  onclick="window.location.href='finish.html'"  
+  class="px-5 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 transition"  
+>  
+  ← Finish Page  
+</button>
+
+  </nav>    <!-- Hero -->    <section class="px-6 md:px-12 py-16 fade-up">  <div class="glass rounded-[40px] p-10 md:p-16 texYt-center">  
+
+  <!-- Floating Icon -->  
+  <div class="floating">  
+
+    <div class="text-8xl">  
+      🌍  
+    </div>  
+
+  </div>  
+
+  <!-- Title -->  
+  <h1 class="text-5xl md:text-7xl font-bold mt-10 leading-tight">  
+
+    Share Your  
+    <span class="text-purple-400">  
+      Trip  
+    </span>  
+
+  </h1>  
+
+  <!-- Description -->  
+  <p class="text-gray-300 text-lg md:text-2xl mt-8 max-w-3xl mx-auto leading-relaxed">  
+
+    Share your travel itinerary,  
+    destination,  
+    and trip planning with your friends and family.  
+
+  </p>  
+
+</div>
+
+  </section>    <!-- Trip Details -->    <section class="px-6 md:px-12 pb-12 fade-up">  <div class="grid md:grid-cols-3 gap-6">  
+
+  <!-- Trip Name -->  
+  <div class="glass rounded-3xl p-8 card-hover text-center">  
+
+    <p class="text-gray-300 text-lg">  
+      Trip Name  
+    </p>  
+
+    <h2  
+      id="tripName"  
+      class="text-3xl font-bold mt-4"  
+    >  
+      -  
+    </h2>  
+
+  </div>  
+
+  <!-- Destination -->  
+  <div class="glass rounded-3xl p-8 card-hover text-center">  
+
+    <p class="text-gray-300 text-lg">  
+      Destination  
+    </p>  
+
+    <h2  
+      id="destination"  
+      class="text-3xl font-bold mt-4"  
+    >  
+      -  
+    </h2>  
+
+  </div>  
+
+  <!-- Budget -->  
+  <div class="glass rounded-3xl p-8 card-hover text-center">  
+
+    <p class="text-gray-300 text-lg">  
+      Budget  
+    </p>  
+
+    <h2  
+      id="budget"  
+      class="text-3xl font-bold mt-4 text-green-400"  
+    >  
+      -  
+    </h2>  
+
+  </div>  
+
+</div>
+
+  </section>    <!-- Share Options -->    <section class="px-6 md:px-12 pb-16 fade-up">  <div class="glass rounded-[35px] p-10">  
+
+  <h2 class="text-4xl font-bold mb-10 text-center">  
+
+    Share Options  
+
+  </h2>  
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">  
+
+    <!-- WhatsApp -->  
+    <button  
+      onclick="shareTrip('WhatsApp')"  
+      class="glass rounded-3xl p-8 card-hover text-center"  
+    >  
+
+      <div class="text-6xl mb-5">  
+        📱  
+      </div>  
+
+      <h3 class="text-2xl font-semibold">  
+        WhatsApp  
+      </h3>  
+
+    </button>  
+
+    <!-- Instagram -->  
+    <button  
+      onclick="shareTrip('Instagram')"  
+      class="glass rounded-3xl p-8 card-hover text-center"  
+    >  
+
+      <div class="text-6xl mb-5">  
+        📸  
+      </div>  
+
+      <h3 class="text-2xl font-semibold">  
+        Instagram  
+      </h3>  
+
+    </button>  
+
+    <!-- Email -->  
+    <button  
+      onclick="shareTrip('Email')"  
+      class="glass rounded-3xl p-8 card-hover text-center"  
+    >  
+
+      <div class="text-6xl mb-5">  
+        ✉️  
+      </div>  
+
+      <h3 class="text-2xl font-semibold">  
+        Email  
+      </h3>  
+
+    </button>  
+
+    <!-- Copy Link -->  
+    <button  
+      onclick="copyLink()"  
+      class="glass rounded-3xl p-8 card-hover text-center"  
+    >  
+
+      <div class="text-6xl mb-5">  
+        🔗  
+      </div>  
+
+      <h3 class="text-2xl font-semibold">  
+        Copy Link  
+      </h3>  
+
+    </button>  
+
+  </div>  
+
+</div>
+
+  </section>    <!-- Public/Private -->    <section class="px-6 md:px-12 pb-20 fade-up">  <div class="glass rounded-[35px] p-10 text-center">  
+
+  <h2 class="text-4xl font-bold mb-10">  
+
+    Trip Privacy  
+
+  </h2>  
+
+  <div class="flex flex-wrap justify-center gap-6">  
+
+    <!-- Public -->  
+    <button  
+      onclick="setPrivacy('Public')"  
+      class="px-10 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 transition duration-300 text-lg font-semibold shadow-2xl"  
+    >  
+      Public Trip 🌍  
+    </button>  
+
+    <!-- Private -->  
+    <button  
+      onclick="setPrivacy('Private')"  
+      class="px-10 py-4 rounded-2xl bg-gradient-to-r from-red-500 to-pink-500 hover:scale-105 transition duration-300 text-lg font-semibold shadow-2xl"  
+    >  
+      Private Trip 🔒  
+    </button>  
+
+  </div>  
+
+  <!-- Status -->  
+  <div  
+    id="privacyStatus"  
+    class="mt-8 text-2xl text-purple-300 font-semibold"  
+  >  
+    Current Privacy: Public  
+  </div>  
+
+</div>
+
+  </section>    <!-- Bottom Buttons -->    <section class="px-6 md:px-12 pb-20 fade-up">  <div class="flex flex-wrap justify-center gap-6">  
+
+  <!-- Dashboard -->  
+  <button  
+    onclick="window.location.href='dashboard.html'"  
+    class="px-10 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition duration-300 text-lg font-semibold shadow-2xl"  
+  >  
+    Dashboard  
+  </button>  
+
+  <!-- Profile -->  
+  <button  
+    onclick="window.location.href='profile.html'"  
+    class="px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:scale-105 transition duration-300 text-lg font-semibold shadow-2xl"  
+  >  
+    Next → Profile  
+  </button>  
+
+</div>
+
+  </section>    <!-- JavaScript -->    <script>  
+  
+    // Load Trip Data  
+    const tripData =  
+      JSON.parse(localStorage.getItem("traveloopTrip"));  
+  
+    // Show Data  
+    if(tripData){  
+  
+      document.getElementById("tripName").innerText =  
+        tripData.tripName || "My Trip";  
+  
+      document.getElementById("destination").innerText =  
+        tripData.destination || "Destination";  
+  
+      document.getElementById("budget").innerText =  
+        "₹" + (tripData.budget || 0);  
+  
+    }  
+  
+    // Share Function  
+    function shareTrip(platform){  
+  
+      alert(  
+        "Trip Shared Successfully on " + platform + " 🎉"  
+      );  
+  
+    }  
+  
+    // Copy Link  
+    function copyLink(){  
+  
+      navigator.clipboard.writeText(  
+        "https://traveloop-trip-demo.com"  
+      );  
+  
+      alert(  
+        "Trip Link Copied Successfully 🔗"  
+      );  
+  
+    }  
+  
+    // Privacy  
+    function setPrivacy(type){  
+  
+      document.getElementById("privacyStatus").innerText =  
+        "Current Privacy: " + type;  
+  
+    }  
+  
+  </script>  </body>  
+</html>

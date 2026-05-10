@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Traveloop Login</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body{
+      overflow: hidden;
+    }
+
+    .bg-animation{
+      background: linear-gradient(-45deg, #0f172a, #1e3a8a, #7c3aed, #0f172a);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+    }
+
+    @keyframes gradient{
+      0%{
+        background-position: 0% 50%;
+      }
+      50%{
+        background-position: 100% 50%;
+      }
+      100%{
+        background-position: 0% 50%;
+      }
+    }
+
+    .floating{
+      animation: floating 4s ease-in-out infinite;
+    }
+
+    @keyframes floating{
+      0%{
+        transform: translateY(0px);
+      }
+      50%{
+        transform: translateY(-15px);
+      }
+      100%{
+        transform: translateY(0px);
+      }
+    }
+
+    .glass{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .input-glow:focus{
+      box-shadow: 0 0 15px #7c3aed;
+    }
+
+    .btn-animate{
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-animate::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transition: 0.5s;
+    }
+
+    .btn-animate:hover::before{
+      left: 100%;
+    }
+
+    .fade-in{
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to{
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-animation min-h-screen flex items-center justify-center relative">
+
+  <!-- Floating Background -->
+  <div class="absolute top-10 left-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30 floating"></div>
+  <div class="absolute bottom-10 right-10 w-52 h-52 bg-blue-500 rounded-full blur-3xl opacity-30 floating"></div>
+
+  <!-- Login Card -->
+  <div class="glass fade-in w-[90%] max-w-md rounded-3xl p-8 text-white relative z-10">
+
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <h1 class="text-5xl font-bold tracking-wide">
+        Travel<span class="text-purple-400">oop</span>
+      </h1>
+
+      <p class="text-gray-300 mt-3 text-sm">
+        Personalized Travel Planning Made Easy ✈️
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form id="loginForm" class="space-y-5">
+
+      <!-- Email -->
+      <div>
+        <label class="block mb-2 text-sm font-medium">
+          Email Address
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          class="input-glow w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 outline-none transition duration-300"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block mb-2 text-sm font-medium">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          class="input-glow w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 outline-none transition duration-300"
+          required
+        />
+      </div>
+
+      <!-- Remember -->
+      <div class="flex items-center justify-between text-sm">
+
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" class="accent-purple-500">
+          Remember Me
+        </label>
+
+        <a href="#" class="text-purple-300 hover:text-purple-400 transition">
+          Forgot Password?
+        </a>
+
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        class="btn-animate w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition duration-300 font-semibold text-lg"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <!-- Divider -->
+    <div class="flex items-center gap-3 my-6">
+      <div class="flex-1 h-[1px] bg-white/20"></div>
+      <span class="text-gray-300 text-sm">OR</span>
+      <div class="flex-1 h-[1px] bg-white/20"></div>
+    </div>
+
+    <!-- Social -->
+    <div class="grid grid-cols-2 gap-4">
+
+      <button class="bg-white/10 hover:bg-white/20 transition py-3 rounded-xl border border-white/20">
+        Google
+      </button>
+
+      <button class="bg-white/10 hover:bg-white/20 transition py-3 rounded-xl border border-white/20">
+        GitHub
+      </button>
+
+    </div>
+
+    <!-- Signup -->
+    <p class="text-center text-sm text-gray-300 mt-8">
+      Don’t have an account?
+      <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">
+        Sign Up
+      </a>
+    </p>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if(email === "" || password === ""){
+        alert("Please fill all fields");
+        return;
+      }
+
+      // Save user in localStorage
+      localStorage.setItem("traveloopUser", email);
+
+      // Success message
+      alert("Login Successful ✈️");
+
+      // Redirect
+      window.location.href = "dashboard.html";
+
+    });
+
+  </script>
+
+</body>
+</html>

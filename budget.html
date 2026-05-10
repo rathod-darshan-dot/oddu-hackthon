@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Budget Planner - Traveloop</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:linear-gradient(-45deg,#0f172a,#1e3a8a,#7c3aed,#0f172a);
+      background-size:400% 400%;
+      animation:gradient 10s ease infinite;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    @keyframes gradient{
+
+      0%{
+        background-position:0% 50%;
+      }
+
+      50%{
+        background-position:100% 50%;
+      }
+
+      100%{
+        background-position:0% 50%;
+      }
+
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .fade-up{
+      animation:fadeUp 1s ease;
+    }
+
+    @keyframes fadeUp{
+
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    .card-hover:hover{
+      transform:translateY(-8px) scale(1.02);
+      transition:0.4s;
+    }
+
+    input{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      color:white;
+    }
+
+    input::placeholder{
+      color:#d1d5db;
+    }
+
+    input:focus{
+      outline:none;
+      border-color:#22c55e;
+      box-shadow:0 0 15px rgba(34,197,94,0.5);
+    }
+
+    .progress-bar{
+      height:18px;
+      border-radius:20px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.1);
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(to right,#22c55e,#06b6d4);
+      transition:1s;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="glass flex items-center justify-between px-8 py-4 sticky top-0 z-50">
+
+    <h1 class="text-3xl font-bold">
+      Travel<span class="text-purple-400">oop</span>
+    </h1>
+
+    <button
+      onclick="window.location.href='itinerary-view.html'"
+      class="px-5 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 transition"
+    >
+      ← Itinerary
+    </button>
+
+  </nav>
+
+  <!-- Hero -->
+  <section class="px-6 md:px-12 py-12 fade-up">
+
+    <div class="glass rounded-3xl p-8 md:p-12">
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        <div>
+
+          <h2 class="text-5xl font-bold leading-tight">
+
+            Budget
+            <span class="text-green-400">
+              Planner 💰
+            </span>
+
+          </h2>
+
+          <p class="text-gray-300 mt-5 text-lg max-w-2xl">
+
+            Manage your travel spending,
+            monitor expenses,
+            and continue to packing planning.
+
+          </p>
+
+        </div>
+
+        <img
+          src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop"
+          class="w-full lg:w-96 rounded-3xl shadow-2xl"
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Summary -->
+  <section class="px-6 md:px-12 fade-up">
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Total -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Total Budget
+        </p>
+
+        <h3
+          id="totalBudget"
+          class="text-4xl font-bold mt-3 text-green-400"
+        >
+          ₹0
+        </h3>
+
+      </div>
+
+      <!-- Used -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Expenses Used
+        </p>
+
+        <h3
+          id="usedBudget"
+          class="text-4xl font-bold mt-3 text-red-400"
+        >
+          ₹0
+        </h3>
+
+      </div>
+
+      <!-- Remaining -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Remaining
+        </p>
+
+        <h3
+          id="remainingBudget"
+          class="text-4xl font-bold mt-3 text-blue-400"
+        >
+          ₹0
+        </h3>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Progress -->
+  <section class="px-6 md:px-12 py-10 fade-up">
+
+    <div class="glass rounded-3xl p-8">
+
+      <div class="flex items-center justify-between mb-5">
+
+        <h2 class="text-3xl font-bold">
+          Budget Usage
+        </h2>
+
+        <span
+          id="percentText"
+          class="text-xl font-semibold text-green-400"
+        >
+          0%
+        </span>
+
+      </div>
+
+      <div class="progress-bar">
+
+        <div
+          id="progressFill"
+          class="progress-fill"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Add Expense -->
+  <section class="px-6 md:px-12 fade-up">
+
+    <div class="glass rounded-3xl p-8">
+
+      <h2 class="text-4xl font-bold mb-8">
+        Add Expense
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Name -->
+        <div>
+
+          <label class="block mb-2 text-lg">
+            Expense Name
+          </label>
+
+          <input
+            type="text"
+            id="expenseName"
+            placeholder="Hotel"
+            class="w-full px-5 py-4 rounded-2xl"
+          >
+
+        </div>
+
+        <!-- Amount -->
+        <div>
+
+          <label class="block mb-2 text-lg">
+            Amount
+          </label>
+
+          <input
+            type="number"
+            id="expenseAmount"
+            placeholder="5000"
+            class="w-full px-5 py-4 rounded-2xl"
+          >
+
+        </div>
+
+        <!-- Button -->
+        <div class="flex items-end">
+
+          <button
+            onclick="addExpense()"
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 transition duration-300 font-semibold text-lg"
+          >
+            + Add Expense
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Expense List -->
+  <section class="px-6 md:px-12 py-14 fade-up">
+
+    <div class="flex items-center justify-between mb-8">
+
+      <h2 class="text-4xl font-bold">
+        Expense History
+      </h2>
+
+      <!-- Packing Button -->
+      <button
+        onclick="openPackingPage()"
+        class="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition duration-300 font-semibold text-lg shadow-2xl"
+      >
+        Next → Packing Planner 🎒
+      </button>
+
+    </div>
+
+    <!-- Expenses -->
+    <div
+      id="expenseContainer"
+      class="space-y-6"
+    >
+
+    </div>
+
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+
+    // Load Trip
+    const tripData =
+      JSON.parse(localStorage.getItem("traveloopTrip"));
+
+    // Budget Variables
+    let totalBudget = 0;
+    let usedBudget = 0;
+
+    // Load Budget
+    if(tripData){
+
+      totalBudget =
+        Number(tripData.budget);
+
+      document.getElementById("totalBudget").innerText =
+        "₹" + totalBudget;
+
+      updateBudget();
+
+    }
+
+    // Expense Container
+    const expenseContainer =
+      document.getElementById("expenseContainer");
+
+    // Add Expense
+    function addExpense(){
+
+      const expenseName =
+        document.getElementById("expenseName").value;
+
+      const expenseAmount =
+        Number(document.getElementById("expenseAmount").value);
+
+      // Validation
+      if(expenseName === "" || expenseAmount <= 0){
+
+        alert("Please enter valid expense");
+
+        return;
+
+      }
+
+      // Add Budget
+      usedBudget += expenseAmount;
+
+      // Create Card
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "glass rounded-3xl p-6 card-hover flex items-center justify-between";
+
+      card.innerHTML = `
+
+        <div>
+
+          <h3 class="text-2xl font-bold">
+            ${expenseName}
+          </h3>
+
+          <p class="text-gray-300 mt-2">
+            Expense added successfully
+          </p>
+
+        </div>
+
+        <div class="text-3xl font-bold text-red-400">
+
+          ₹${expenseAmount}
+
+        </div>
+
+      `;
+
+      expenseContainer.appendChild(card);
+
+      // Update
+      updateBudget();
+
+      // Clear Inputs
+      document.getElementById("expenseName").value = "";
+      document.getElementById("expenseAmount").value = "";
+
+    }
+
+    // Update Budget
+    function updateBudget(){
+
+      const remaining =
+        totalBudget - usedBudget;
+
+      document.getElementById("usedBudget").innerText =
+        "₹" + usedBudget;
+
+      document.getElementById("remainingBudget").innerText =
+        "₹" + remaining;
+
+      let percent = 0;
+
+      if(totalBudget > 0){
+
+        percent =
+          (usedBudget / totalBudget) * 100;
+
+      }
+
+      // Progress
+      document.getElementById("progressFill").style.width =
+        percent + "%";
+
+      document.getElementById("percentText").innerText =
+        Math.floor(percent) + "%";
+
+    }
+
+    // Open Packing Page
+    function openPackingPage(){
+
+      alert(
+        "Opening Packing Checklist 🎒"
+      );
+
+      // Open Next Page
+      window.location.href =
+        "packing.html";
+
+    }
+
+  </script>
+
+</body>
+</html>

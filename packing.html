@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Packing Checklist - Traveloop</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:linear-gradient(-45deg,#0f172a,#1e3a8a,#7c3aed,#0f172a);
+      background-size:400% 400%;
+      animation:gradient 10s ease infinite;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    @keyframes gradient{
+
+      0%{
+        background-position:0% 50%;
+      }
+
+      50%{
+        background-position:100% 50%;
+      }
+
+      100%{
+        background-position:0% 50%;
+      }
+
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .fade-up{
+      animation:fadeUp 1s ease;
+    }
+
+    @keyframes fadeUp{
+
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    .card-hover:hover{
+      transform:translateY(-8px) scale(1.02);
+      transition:0.4s;
+    }
+
+    input{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      color:white;
+    }
+
+    input::placeholder{
+      color:#d1d5db;
+    }
+
+    input:focus{
+      outline:none;
+      border-color:#a855f7;
+      box-shadow:0 0 15px rgba(168,85,247,0.5);
+    }
+
+    .checked{
+      text-decoration:line-through;
+      opacity:0.6;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="glass flex items-center justify-between px-8 py-4 sticky top-0 z-50">
+
+    <h1 class="text-3xl font-bold">
+      Travel<span class="text-purple-400">oop</span>
+    </h1>
+
+    <button
+      onclick="window.location.href='budget.html'"
+      class="px-5 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 transition"
+    >
+      ← Budget Planner
+    </button>
+
+  </nav>
+
+  <!-- Hero -->
+  <section class="px-6 md:px-12 py-12 fade-up">
+
+    <div class="glass rounded-3xl p-8 md:p-12">
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        <!-- Left -->
+        <div>
+
+          <h2 class="text-5xl font-bold leading-tight">
+
+            Packing
+            <span class="text-purple-400">
+              Checklist 🎒
+            </span>
+
+          </h2>
+
+          <p class="text-gray-300 mt-5 text-lg max-w-2xl">
+
+            Organize all travel essentials,
+            track packed items,
+            and continue to final trip completion.
+
+          </p>
+
+        </div>
+
+        <!-- Right -->
+        <img
+          src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1200&auto=format&fit=crop"
+          class="w-full lg:w-96 rounded-3xl shadow-2xl"
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Trip Summary -->
+  <section class="px-6 md:px-12 fade-up">
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Trip -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Trip Name
+        </p>
+
+        <h3
+          id="tripName"
+          class="text-3xl font-bold mt-3"
+        >
+          -
+        </h3>
+
+      </div>
+
+      <!-- Destination -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Destination
+        </p>
+
+        <h3
+          id="destination"
+          class="text-3xl font-bold mt-3"
+        >
+          -
+        </h3>
+
+      </div>
+
+      <!-- Budget -->
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Budget
+        </p>
+
+        <h3
+          id="budget"
+          class="text-3xl font-bold mt-3 text-green-400"
+        >
+          -
+        </h3>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Add Item -->
+  <section class="px-6 md:px-12 py-12 fade-up">
+
+    <div class="glass rounded-3xl p-8">
+
+      <div class="flex items-center justify-between mb-8 flex-wrap gap-5">
+
+        <h2 class="text-4xl font-bold">
+          Add Packing Item
+        </h2>
+
+        <!-- Finish Button -->
+        <button
+          onclick="openFinishPage()"
+          class="px-8 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 transition duration-300 font-semibold text-lg shadow-2xl"
+        >
+          Finish Planning ✈️
+        </button>
+
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Item -->
+        <div class="md:col-span-2">
+
+          <label class="block mb-2 text-lg">
+            Item Name
+          </label>
+
+          <input
+            type="text"
+            id="itemInput"
+            placeholder="Passport, Clothes, Shoes..."
+            class="w-full px-5 py-4 rounded-2xl"
+          >
+
+        </div>
+
+        <!-- Button -->
+        <div class="flex items-end">
+
+          <button
+            onclick="addItem()"
+            class="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition duration-300 font-semibold text-lg"
+          >
+            + Add Item
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Checklist -->
+  <section class="px-6 md:px-12 pb-20 fade-up">
+
+    <h2 class="text-4xl font-bold mb-8">
+      Packing Items
+    </h2>
+
+    <!-- Container -->
+    <div
+      id="checklistContainer"
+      class="space-y-6"
+    >
+
+    </div>
+
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+
+    // Load Trip Data
+    const tripData =
+      JSON.parse(localStorage.getItem("traveloopTrip"));
+
+    // Show Trip Data
+    if(tripData){
+
+      document.getElementById("tripName").innerText =
+        tripData.tripName || "My Trip";
+
+      document.getElementById("destination").innerText =
+        tripData.destination || "Destination";
+
+      document.getElementById("budget").innerText =
+        "₹" + (tripData.budget || 0);
+
+    }
+
+    // Container
+    const checklistContainer =
+      document.getElementById("checklistContainer");
+
+    // Add Item
+    function addItem(){
+
+      const item =
+        document.getElementById("itemInput").value;
+
+      // Validation
+      if(item === ""){
+
+        alert("Please enter item name");
+
+        return;
+
+      }
+
+      // Create Card
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "glass rounded-3xl p-6 card-hover flex items-center justify-between";
+
+      card.innerHTML = `
+
+        <div class="flex items-center gap-5">
+
+          <input
+            type="checkbox"
+            onchange="toggleCheck(this)"
+            class="w-6 h-6"
+          >
+
+          <h3 class="text-2xl font-semibold item-text">
+            ${item}
+          </h3>
+
+        </div>
+
+        <button
+          onclick="this.parentElement.remove()"
+          class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl transition"
+        >
+          Delete
+        </button>
+
+      `;
+
+      checklistContainer.appendChild(card);
+
+      // Clear Input
+      document.getElementById("itemInput").value = "";
+
+    }
+
+    // Toggle Check
+    function toggleCheck(checkbox){
+
+      const text =
+        checkbox.parentElement.querySelector(".item-text");
+
+      text.classList.toggle("checked");
+
+    }
+
+    // Open Finalizing Page
+    function openFinishPage(){
+
+      alert(
+        "🎉 Finalizing Your Trip!"
+      );
+
+      // Redirect To finalizing.html
+      window.location.href =
+        "finalizing.html";
+
+    }
+
+  </script>
+
+</body>
+</html>

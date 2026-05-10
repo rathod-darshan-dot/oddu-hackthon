@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Itinerary View - Traveloop</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:linear-gradient(-45deg,#0f172a,#1e3a8a,#7c3aed,#0f172a);
+      background-size:400% 400%;
+      animation:gradient 10s ease infinite;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    @keyframes gradient{
+
+      0%{
+        background-position:0% 50%;
+      }
+
+      50%{
+        background-position:100% 50%;
+      }
+
+      100%{
+        background-position:0% 50%;
+      }
+
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .fade-up{
+      animation:fadeUp 1s ease;
+    }
+
+    @keyframes fadeUp{
+
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    .card-hover:hover{
+      transform:translateY(-8px) scale(1.02);
+      transition:0.4s;
+    }
+
+    .timeline-line{
+      position:absolute;
+      left:20px;
+      top:0;
+      width:4px;
+      height:100%;
+      background:linear-gradient(to bottom,#a855f7,#3b82f6);
+      border-radius:20px;
+    }
+
+    input{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      color:white;
+    }
+
+    input:focus{
+      outline:none;
+      border-color:#a855f7;
+      box-shadow:0 0 15px rgba(168,85,247,0.5);
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="glass flex items-center justify-between px-8 py-4 sticky top-0 z-50">
+
+    <h1 class="text-3xl font-bold">
+      Travel<span class="text-purple-400">oop</span>
+    </h1>
+
+    <button
+      onclick="window.location.href='itinerary-builder.html'"
+      class="px-5 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 transition"
+    >
+      ← Edit Itinerary
+    </button>
+
+  </nav>
+
+  <!-- Hero -->
+  <section class="px-6 md:px-12 py-12 fade-up">
+
+    <div class="glass rounded-3xl p-8 md:p-12">
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        <div>
+
+          <h2 class="text-5xl font-bold leading-tight">
+            Final
+            <span class="text-purple-400">
+              Itinerary ✈️
+            </span>
+          </h2>
+
+          <p class="text-gray-300 mt-5 text-lg max-w-2xl">
+            Review your complete travel journey,
+            edit plans,
+            and continue to budget planning.
+          </p>
+
+        </div>
+
+        <img
+          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"
+          class="w-full lg:w-96 rounded-3xl shadow-2xl"
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Trip Summary -->
+  <section class="px-6 md:px-12 fade-up">
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Trip Name
+        </p>
+
+        <h3
+          id="tripName"
+          class="text-3xl font-bold mt-3"
+        >
+          -
+        </h3>
+
+      </div>
+
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Destination
+        </p>
+
+        <h3
+          id="destination"
+          class="text-3xl font-bold mt-3"
+        >
+          -
+        </h3>
+
+      </div>
+
+      <div class="glass rounded-3xl p-6 card-hover">
+
+        <p class="text-gray-300">
+          Budget
+        </p>
+
+        <h3
+          id="budget"
+          class="text-3xl font-bold mt-3 text-green-400"
+        >
+          -
+        </h3>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Editable Day Planner -->
+  <section class="px-6 md:px-12 py-16 fade-up">
+
+    <div class="flex items-center justify-between mb-10">
+
+      <h2 class="text-4xl font-bold">
+        Editable Timeline
+      </h2>
+
+      <button
+        onclick="addDay()"
+        class="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105 transition font-semibold"
+      >
+        + Add Day
+      </button>
+
+    </div>
+
+    <!-- Timeline -->
+    <div
+      id="timelineContainer"
+      class="relative"
+    >
+
+      <div class="timeline-line"></div>
+
+      <!-- Day Cards Will Come Here -->
+
+    </div>
+
+  </section>
+
+  <!-- Buttons -->
+  <section class="px-6 md:px-12 pb-20 text-center fade-up">
+
+    <div class="flex flex-wrap items-center justify-center gap-5">
+
+      <!-- Back -->
+      <button
+        onclick="window.location.href='itinerary-builder.html'"
+        class="px-8 py-4 rounded-2xl bg-purple-500 hover:bg-purple-600 transition font-semibold text-lg"
+      >
+        Edit Builder
+      </button>
+
+      <!-- Budget -->
+      <button
+        onclick="goBudget()"
+        class="px-10 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 transition duration-300 font-semibold text-lg shadow-2xl"
+      >
+        Next → Budget Planner
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+
+    // Load Trip Data
+    const tripData =
+      JSON.parse(localStorage.getItem("traveloopTrip"));
+
+    // Show Trip Data
+    if(tripData){
+
+      document.getElementById("tripName").innerText =
+        tripData.tripName;
+
+      document.getElementById("destination").innerText =
+        tripData.destination;
+
+      document.getElementById("budget").innerText =
+        "₹" + tripData.budget;
+
+    }
+
+    // Timeline Container
+    const timelineContainer =
+      document.getElementById("timelineContainer");
+
+    // Day Counter
+    let dayCount = 0;
+
+    // Add Day
+    function addDay(){
+
+      dayCount++;
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "relative pl-16 mb-10";
+
+      card.innerHTML = `
+
+        <!-- Dot -->
+        <div
+          class="absolute left-[6px] top-5 w-8 h-8 rounded-full bg-purple-500 border-4 border-white"
+        ></div>
+
+        <!-- Card -->
+        <div class="glass rounded-3xl p-8 card-hover">
+
+          <div class="flex items-center justify-between mb-6">
+
+            <h3 class="text-3xl font-bold">
+              Day ${dayCount}
+            </h3>
+
+            <button
+              onclick="this.parentElement.parentElement.parentElement.remove()"
+              class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl transition"
+            >
+              Delete
+            </button>
+
+          </div>
+
+          <!-- City -->
+          <div class="mb-5">
+
+            <label class="block mb-2 text-lg">
+              City
+            </label>
+
+            <input
+              type="text"
+              placeholder="Goa"
+              class="w-full px-5 py-4 rounded-2xl"
+            >
+
+          </div>
+
+          <!-- Activities -->
+          <div class="mb-5">
+
+            <label class="block mb-2 text-lg">
+              Activities
+            </label>
+
+            <input
+              type="text"
+              placeholder="Beach Visit, Shopping..."
+              class="w-full px-5 py-4 rounded-2xl"
+            >
+
+          </div>
+
+          <!-- Notes -->
+          <div>
+
+            <label class="block mb-2 text-lg">
+              Notes
+            </label>
+
+            <input
+              type="text"
+              placeholder="Special plans..."
+              class="w-full px-5 py-4 rounded-2xl"
+            >
+
+          </div>
+
+        </div>
+
+      `;
+
+      timelineContainer.appendChild(card);
+
+    }
+
+    // Default Day
+    addDay();
+
+    // Budget Page Open
+    function goBudget(){
+
+      alert("Opening Budget Planner 💰");
+
+      window.location.href =
+        "budget.html";
+
+    }
+
+  </script>
+
+</body>
+</html>
